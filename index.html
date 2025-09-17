@@ -1,170 +1,143 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cardápio Interativo</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Warm Bakery (Beiges, Browns, Soft Amber accent) -->
-    <!-- Application Structure Plan: A single-page dashboard design. A top navigation bar with buttons filters the main content grid by category ('Todos', 'Pães', 'Bolos', etc.). This provides immediate, intuitive control over the displayed items. This structure was chosen to separate the primary task (viewing/filtering the menu) from the secondary analysis (price comparison), making the app easy to use while still providing valuable insights. A new section with a generative AI feature was added to create item descriptions on demand, enhancing the user's engagement with the content. -->
-    <!-- Visualization & Content Choices: Menu Items -> Goal: Organize/Inform -> Presentation: HTML Cards in a responsive grid -> Interaction: Category filtering via JS. AI-Generated Descriptions -> Goal: Engage/Inform -> Presentation: Dynamic text block -> Interaction: Button click to call the Gemini API. Confirmed NO SVG/Mermaid used. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <title>Pet Shop Feliz</title>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #FFF7F0, #FDF0FE);
-            color: #4A0E4B;
-        }
-        .nav-button {
-            transition: all 0.3s ease;
-        }
-        .nav-button.active {
-            background-color: #E6007A;
-            color: #FFF0F0;
-            font-weight: 600;
-        }
-        .text-custom-title {
-            color: #E6007A;
-        }
+        /* CSS básico para estilizar a página */
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
+        header { background-color: #5d9d9d; color: white; padding: 1em 0; text-align: center; }
+        .container { width: 80%; margin: auto; overflow: hidden; }
+        .login-section { background: white; padding: 20px; margin-top: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .products-section { display: flex; flex-wrap: wrap; justify-content: space-around; gap: 20px; margin-top: 20px; }
+        .product-card { background: white; border: 1px solid #ddd; padding: 15px; border-radius: 8px; width: 250px; text-align: center; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+        .product-card img { max-width: 100%; height: auto; border-radius: 4px; }
+        .product-card h3 { color: #333; }
+        .product-card p { color: #666; }
+        .price { font-size: 1.2em; font-weight: bold; color: #5d9d9d; }
     </style>
 </head>
-<body class="text-stone-800">
+<body>
 
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        
-        <header class="text-center mb-8">
-            <h1 class="text-4xl md:text-5xl font-bold text-custom-title">Cardápio Interativo</h1>
-            <p class="mt-2 text-lg text-purple-700">Explore nossos produtos e compare os preços de forma visual.</p>
-        </header>
+    <header>
+        <h1>Pet Shop Feliz</h1>
+        <p>Tudo para o seu melhor amigo!</p>
+    </header>
 
-        <main>
-            <section id="menu-section" class="mb-12">
-                <h2 class="text-2xl font-bold text-custom-title mb-4 text-center">Nossos Produtos</h2>
-                <p class="text-center text-purple-600 mb-6 max-w-2xl mx-auto">
-                    Navegue por nossas delícias! Use os botões abaixo para filtrar os itens por categoria. Cada produto é preparado com ingredientes de alta qualidade para garantir o melhor sabor.
-                </p>
-                <nav id="category-filters" class="flex flex-wrap justify-center gap-2 mb-8">
-                </nav>
-                <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                </div>
-            </section>
+    <div class="container">
+
+        <section class="login-section">
+            <h2>Login de Clientes</h2>
+            <form action="/login" method="post">
+                <label for="email">E-mail:</label><br>
+                <input type="email" id="email" name="email" required><br><br>
+                <label for="senha">Senha:</label><br>
+                <input type="password" id="senha" name="senha" required><br><br>
+                <input type="submit" value="Entrar">
+            </form>
+            <p style="color:red;" th:if="${erroLogin}" th:text="${erroLogin}"></p>
+            <p style="color:green;" th:if="${mensagem}" th:text="${mensagem}"></p>
+        </section>
+
+        <hr>
+
+        <section class="products-section">
+            <h2>Nossos Produtos</h2>
+            <div class="product-card">
+                <img src="racao-caes.jpg" alt="Ração Premium para Cães">
+                <h3>Ração Premium para Cães</h3>
+                <p>Alimento completo e balanceado para cães adultos.</p>
+                <p class="price">R$ 120,50</p>
+                <p>Entrega: 3 dias úteis</p>
+            </div>
             
-        </main>
-        
-        <footer class="text-center mt-12 py-6 border-t border-pink-200">
-            <p class="text-purple-500">Desenvolvido como uma ferramenta de visualização interativa.</p>
-        </footer>
+            <div class="product-card">
+                <img src="areia-gatos.jpg" alt="Areia Higiênica para Gatos">
+                <h3>Areia Higiênica para Gatos</h3>
+                <p>Super absorvente e com controle de odor.</p>
+                <p class="price">R$ 35,90</p>
+                <p>Entrega: 2 dias úteis</p>
+            </div>
+            
+            <div class="product-card">
+                <img src="mordedor.jpg" alt="Brinquedo Mordedor">
+                <h3>Brinquedo Mordedor</h3>
+                <p>Ideal para filhotes, ajuda a aliviar a coceira nas gengivas.</p>
+                <p class="price">R$ 25,00</p>
+                <p>Entrega: 5 dias úteis</p>
+            </div>
+            
+            <div class="product-card">
+                <img src="shampoo-pet.jpg" alt="Shampoo para Cães e Gatos">
+                <h3>Shampoo para Cães e Gatos</h3>
+                <p>Hipoalergênico e com pH neutro.</p>
+                <p class="price">R$ 45,00</p>
+                <p>Entrega: 3 dias úteis</p>
+            </div>
+
+        </section>
 
     </div>
 
-    <script>
-        const menuData = [
-            { name: 'Pão simples', category: 'Pães caseiros', price: 20.00 },
-            { name: 'Pão recheado', category: 'Pães caseiros', price: 40.00 },
-            { name: 'Cuscuz Sardinha/Frango/etc G', category: 'Cuscuz paulista', price: 150.00 },
-            { name: 'Cuscuz Camarão', category: 'Cuscuz paulista', price: 190.00 },
-            { name: 'Bolo de Milho', category: 'Bolos simples', price: 52.00, portions: 16 },
-            { name: 'Bolo de Fubá', category: 'Bolos simples', price: 52.00, portions: 16 },
-            { name: 'Bolo Fubá c/ goiabada', category: 'Bolos simples', price: 60.00, portions: 16 },
-            { name: 'Bolo Cocada invertida', category: 'Bolos simples', price: 60.00, portions: 16 },
-            { name: 'Bolo de Chocolate', category: 'Bolos simples', price: 60.00, portions: 16 },
-            { name: 'Bolo Mesclado', category: 'Bolos simples', price: 60.00, portions: 16 },
-            { name: 'Bolo Formigueiro', category: 'Bolos simples', price: 56.00, portions: 16 },
-            { name: 'Bolo Laranja c/ casca', category: 'Bolos simples', price: 60.00, portions: 16 },
-            { name: 'Bolo Vulcão Cenoura c/ choc.', category: 'Bolos simples', price: 70.00 },
-            { name: 'Bolo Vulcão Choc. c/ brig.', category: 'Bolos vulcão', price: 75.00 },
-            { name: 'Torta de Frango G', category: 'Tortas salgadas', price: 95.00 },
-            { name: 'Torta Baurú', category: 'Tortas salgadas', price: 110.00 },
-            { name: 'Torta de morango', category: 'Tortas doces', price: 100.00, portions: 10 },
-            { name: 'Torta de limão', category: 'Tortas doces', price: 85.00, portions: 10 },
-            { name: 'Torta Maracolate', category: 'Tortas doces', price: 110.00, portions: 10 },
-            { name: 'Torta holandesa', category: 'Tortas doces', price: 120.00, portions: 10 },
-            { name: 'Torta banoffe', category: 'Tortas doces', price: 120.00, portions: 10 },
-            { name: 'Doce de leite', category: 'Bolos recheados', price: 89.00, per_kg: true },
-            { name: 'Doce de leite c/ coco', category: 'Bolos recheados', price: 90.00, per_kg: true },
-            { name: 'Doce de leite c/ ameixa', category: 'Bolos recheados', price: 100.00, per_kg: true },
-            { name: 'Creme com abacaxi', category: 'Bolos recheados', price: 90.00, per_kg: true },
-            { name: 'Creme com pêssego', category: 'Bolos recheados', price: 90.00, per_kg: true },
-            { name: 'Mousse de maracujá', category: 'Bolos recheados', price: 100.00, per_kg: true },
-            { name: 'Mousse de chocolate', category: 'Bolos recheados', price: 105.00, per_kg: true },
-            { name: 'Ninho com morangos', category: 'Bolos recheados', price: 105.00, per_kg: true },
-            { name: 'Ninho com abacaxi', category: 'Bolos recheados', price: 105.00, per_kg: true },
-            { name: 'Merengue', category: 'Bolos recheados', price: 95.00, per_kg: true },
-            { name: 'Brigadeiro', category: 'Bolos recheados', price: 90.00, per_kg: true },
-            { name: 'Prestigio', category: 'Bolos recheados', price: 90.00, per_kg: true },
-            { name: 'Dois amores', category: 'Bolos recheados', price: 120.00, per_kg: true },
-            { name: 'Massa branca a partir', category: 'Bolos recheados', price: 89.00, per_kg: true },
-            { name: 'Massa de chocolate', category: 'Bolos recheados', price: 90.00, per_kg: true },
-            { name: 'Pudim G', category: 'Outros', price: 90.00 },
-            { name: 'Sonhos', category: 'Outros', price: 8.00 },
-            { name: 'Pão de mel', category: 'Outros', price: 9.00 }
-        ];
-
-        const categoryBorderColors = {
-            'Pães caseiros': '#E6007A',
-            'Cuscuz paulista': '#FFD700',
-            'Bolos simples': '#8A2BE2',
-            'Bolos vulcão': '#FF69B4',
-            'Tortas salgadas': '#C71585',
-            'Tortas doces': '#FFC0CB',
-            'Bolos recheados': '#9932CC',
-            'Outros': '#DAA520'
-        };
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            const menuGrid = document.getElementById('menu-grid');
-            const categoryFilters = document.getElementById('category-filters');
-
-            const categories = ['Todos', ...new Set(menuData.map(item => item.category))];
-
-            function renderMenu(items) {
-                menuGrid.innerHTML = '';
-                items.forEach(item => {
-                    const card = document.createElement('div');
-                    card.className = 'bg-white rounded-xl shadow-md p-5 flex flex-col justify-between hover:shadow-xl transition-shadow duration-300';
-                    card.innerHTML = `
-                        <div>
-                            <p class="text-xs font-semibold uppercase tracking-wider" style="color: ${categoryBorderColors[item.category] || '#6b7280'}">${item.category}</p>
-                            <h3 class="font-bold text-lg mt-1 text-stone-800">${item.name}</h3>
-                        </div>
-                        <p class="text-2xl font-bold text-custom-title mt-4">
-                            R$ ${item.price.toFixed(2).replace('.', ',')}
-                        </p>
-                        ${item.per_kg ? '<p class="text-xs text-stone-500 mt-1">(preço por quilo)</p>' : ''}
-                        ${item.portions ? '<p class="text-xs text-stone-500 mt-1">(rende ' + item.portions + ' pedaços médios)</p>' : ''}
-                    `;
-                    menuGrid.appendChild(card);
-                });
-            }
-
-            function setupFilters() {
-                categories.forEach(category => {
-                    const button = document.createElement('button');
-                    button.textContent = category;
-                    button.className = 'nav-button px-4 py-2 rounded-full text-sm font-medium bg-white text-custom-title border border-pink-200 hover:bg-pink-100';
-                    if (category === 'Todos') {
-                        button.classList.add('active');
-                    }
-                    button.addEventListener('click', () => {
-                        document.querySelectorAll('.nav-button').forEach(btn => btn.classList.remove('active'));
-                        button.classList.add('active');
-                        
-                        const filteredData = category === 'Todos'
-                            ? menuData
-                            : menuData.filter(item => item.category === category);
-                        renderMenu(filteredData);
-                    });
-                    categoryFilters.appendChild(button);
-                });
-            }
-
-            setupFilters();
-            renderMenu(menuData);
-        });
-    </script>
 </body>
 </html>
+package com.petshop.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Controller
+public class PetShopController {
+
+    // Simulação de um banco de dados de produtos
+    // Em um projeto real, isso viria de um banco de dados
+    private List<Produto> produtos = List.of(
+        new Produto("Ração Premium para Cães", "Alimento completo e balanceado para cães adultos.", "racao-caes.jpg", 120.50),
+        new Produto("Areia Higiênica para Gatos", "Super absorvente e com controle de odor.", "areia-gatos.jpg", 35.90),
+        new Produto("Brinquedo Mordedor", "Ideal para filhotes, ajuda a aliviar a coceira nas gengivas.", "mordedor.jpg", 25.00),
+        new Produto("Shampoo para Cães e Gatos", "Hipoalergênico e com pH neutro.", "shampoo-pet.jpg", 45.00)
+    );
+
+    // Classe para representar um produto (Exemplo de um 'POJO' - Plain Old Java Object)
+    public static class Produto {
+        public String nome;
+        public String descricao;
+        public String imagem;
+        public double preco;
+
+        public Produto(String nome, String descricao, String imagem, double preco) {
+            this.nome = nome;
+            this.descricao = descricao;
+            this.imagem = imagem;
+            this.preco = preco;
+        }
+    }
+
+    // Mapeia a URL "/" para a página inicial (index.html)
+    @GetMapping("/")
+    public String paginaInicial(Model model) {
+        model.addAttribute("produtos", produtos);
+        return "index"; // Spring Boot busca o arquivo 'index.html'
+    }
+
+    // Mapeia a URL "/login" para a lógica de login
+    @PostMapping("/login")
+    public String login(@RequestParam String email, @RequestParam String senha, Model model) {
+        // Lógica de autenticação: verificar no banco de dados se o email e a senha estão corretos
+        // Por enquanto, vamos simular que o login é sempre bem-sucedido
+        boolean loginSucesso = "cliente@teste.com".equals(email) && "12345".equals(senha);
+
+        if (loginSucesso) {
+            model.addAttribute("mensagem", "Login realizado com sucesso! Bem-vindo(a)!");
+            // Redireciona para a página principal ou outra página
+            return "redirect:/"; 
+        } else {
+            model.addAttribute("erroLogin", "Email ou senha incorretos. Tente novamente.");
+            return "index"; // Volta para a página de login com a mensagem de erro
+        }
+    }
+}
