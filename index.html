@@ -1,108 +1,314 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PetShop Amigo - Produtos para Cães e Gatos</title>
-    <link rel="stylesheet" href="style.css">
+    <title>PetShop Online - Tudo para seu Cão e Gato</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;500;600;700&display=swap">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f9f9f9; color: #333; line-height: 1.6; }
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+        header { background: linear-gradient(135deg, #4e9caf 0%, #2c6d7c 100%); color: white; padding: 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.2); position: sticky; top: 0; z-index: 100; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 24px; font-weight: bold; display: flex; align-items: center; }
+        .logo i { margin-right: 10px; font-size: 28px; }
+        nav ul { display: flex; list-style: none; }
+        nav ul li { margin-left: 20px; }
+        nav ul li a { color: white; text-decoration: none; font-weight: 500; transition: color 0.3s; padding: 5px 10px; border-radius: 4px; }
+        nav ul li a:hover { color: #ffd700; background-color: rgba(255, 255, 255, 0.1); }
+        .search-cart { display: flex; align-items: center; }
+        .search-box { padding: 10px; border: none; border-radius: 4px 0 0 4px; width: 200px; }
+        .search-btn { padding: 10px; background: #ff6b6b; border: none; border-radius: 0 4px 4px 0; color: white; cursor: pointer; }
+        .cart-btn { background-color: #ff6b6b; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; margin-left: 15px; transition: background-color 0.3s; }
+        .cart-btn:hover { background-color: #ff5252; }
+        .cart-btn i { margin-right: 5px; }
+        .banner { background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1596272875729-ed2ff7d6d9c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80'); background-size: cover; background-position: center; height: 500px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; margin-bottom: 40px; border-radius: 0 0 10px 10px; }
+        .banner h1 { font-size: 48px; margin-bottom: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        .banner p { font-size: 20px; margin-bottom: 30px; max-width: 700px; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
+        .btn { background-color: #ff6b6b; color: white; padding: 15px 30px; border: none; border-radius: 4px; font-size: 18px; cursor: pointer; transition: background-color 0.3s, transform 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .btn:hover { background-color: #ff5252; transform: translateY(-2px); }
+        .categories { padding: 40px 0; }
+        .section-title { text-align: center; margin-bottom: 40px; font-size: 32px; color: #333; position: relative; padding-bottom: 15px; }
+        .section-title::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 4px; background-color: #ff6b6b; border-radius: 2px; }
+        .category-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 25px; }
+        .category { background-color: white; border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: center; transition: transform 0.3s, box-shadow 0.3s; width: 250px; }
+        .category:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
+        .category img { width: 100%; height: 160px; object-fit: cover; }
+        .category h3 { padding: 20px; color: #2c6d7c; font-size: 20px; }
+        .products { padding: 60px 0; background: linear-gradient(to bottom, #f0f0f0 0%, #e0e0e0 100%); }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 30px; }
+        .product { background-color: white; border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s; position: relative; }
+        .product:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
+        .product-badge { position: absolute; top: 10px; right: 10px; background-color: #ff6b6b; color: white; padding: 5px 10px; border-radius: 4px; font-weight: bold; font-size: 14px; }
+        .product img { width: 100%; height: 220px; object-fit: cover; border-bottom: 1px solid #eee; }
+        .product-info { padding: 20px; }
+        .product-title { font-size: 18px; margin-bottom: 10px; color: #333; height: 50px; overflow: hidden; }
+        .product-price { font-size: 22px; font-weight: bold; color: #ff6b6b; margin-bottom: 15px; }
+        .product-price .old-price { font-size: 16px; color: #999; text-decoration: line-through; margin-right: 10px; }
+        .product-btn { background-color: #4e9caf; color: white; border: none; padding: 12px 20px; border-radius: 4px; cursor: pointer; width: 100%; transition: background-color 0.3s; font-weight: bold; }
+        .product-btn:hover { background-color: #3a7d8d; }
+        .newsletter { padding: 80px 0; background: linear-gradient(135deg, #4e9caf 0%, #2c6d7c 100%); color: white; text-align: center; }
+        .newsletter h2 { margin-bottom: 20px; font-size: 32px; }
+        .newsletter p { max-width: 600px; margin: 0 auto 30px; font-size: 18px; }
+        .newsletter-form { display: flex; justify-content: center; max-width: 500px; margin: 0 auto; }
+        .newsletter-input { flex: 1; padding: 15px; border: none; border-radius: 4px 0 0 4px; font-size: 16px; }
+        .newsletter-btn { background-color: #ff6b6b; color: white; border: none; padding: 0 25px; border-radius: 0 4px 4px 0; cursor: pointer; font-size: 16px; font-weight: bold; transition: background-color 0.3s; }
+        .newsletter-btn:hover { background-color: #ff5252; }
+        footer { background-color: #2c3e50; color: white; padding: 60px 0 20px; }
+        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        .footer-section h3 { margin-bottom: 20px; color: #ffd700; font-size: 20px; position: relative; padding-bottom: 10px; }
+        .footer-section h3::after { content: ''; position: absolute; bottom: 0; left: 0; width: 40px; height: 3px; background-color: #ff6b6b; border-radius: 2px; }
+        .footer-section p, .footer-section li { margin-bottom: 12px; color: #ecf0f1; }
+        .footer-section ul { list-style: none; }
+        .footer-section ul li { margin-bottom: 12px; }
+        .footer-section ul li a { color: #ecf0f1; text-decoration: none; transition: color 0.3s; display: block; }
+        .footer-section ul li a:hover { color: #ff6b6b; padding-left: 5px; }
+        .social-icons { display: flex; gap: 15px; margin-top: 20px; }
+        .social-icons a { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background-color: rgba(255, 255, 255, 0.1); color: white; border-radius: 50%; transition: background-color 0.3s, transform 0.3s; }
+        .social-icons a:hover { background-color: #ff6b6b; transform: translateY(-3px); }
+        .footer-bottom { text-align: center; padding-top: 30px; border-top: 1px solid #34495e; color: #ecf0f1; font-size: 14px; }
+        @media (max-width: 992px) { .header-content { flex-direction: column; text-align: center; } nav ul { margin: 20px 0; justify-content: center; flex-wrap: wrap; } nav ul li { margin: 5px 10px; } .search-cart { justify-content: center; width: 100%; margin-top: 15px; } .banner { height: 400px; } .banner h1 { font-size: 36px; } .banner p { font-size: 18px; } }
+        @media (max-width: 768px) { .newsletter-form { flex-direction: column; } .newsletter-input { border-radius: 4px; margin-bottom: 10px; } .newsletter-btn { border-radius: 4px; padding: 15px; } .banner { height: 350px; } .banner h1 { font-size: 32px; } }
+        @media (max-width: 576px) { .category { width: 100%; max-width: 300px; } .product-grid { grid-template-columns: 1fr; } .banner { height: 300px; } .banner h1 { font-size: 28px; } .banner p { font-size: 16px; } .btn { padding: 12px 25px; font-size: 16px; } }
+    </style>
 </head>
 <body>
     <header>
-        <nav>
-            <h1>PetShop Amigo</h1>
-            <ul>
-                <li><a href="index.html">Início</a></li>
-                <li><a href="produtos.html">Produtos</a></li>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="carrinho.html">Carrinho</a></li>
-            </ul>
-        </nav>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-paw"></i>
+                <span>PetShop Online</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">Início</a></li>
+                    <li><a href="#">Cães</a></li>
+                    <li><a href="#">Gatos</a></li>
+                    <li><a href="#">Ofertas</a></li>
+                    <li><a href="#">Contato</a></li>
+                </ul>
+            </nav>
+            <div class="search-cart">
+                <div class="search-container">
+                    <input type="text" class="search-box" placeholder="Buscar produtos...">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+                <button class="cart-btn"><i class="fas fa-shopping-cart"></i> Carrinho (0)</button>
+            </div>
+        </div>
     </header>
 
-    <main>
-        <h2>Sejam bem-vindos ao PetShop Amigo!</h2>
-        <p>Encontre os melhores produtos para seus cães e gatos.</p>
-        <section class="destaques">
-            <h3>Destaques</h3>
-            <div class="produto-card">
-                <img src="https://via.placeholder.com/300x200.png?text=Brinquedo+para+Cão" alt="Brinquedo para Cão">
-                <h4>Brinquedo para Cão</h4>
-                <p>R$ 25,00</p>
-                <button>Adicionar ao Carrinho</button>
+    <section class="banner">
+        <h1>Tudo para o seu pet</h1>
+        <p>Encontre os melhores produtos para cães e gatos com os melhores preços!</p>
+        <button class="btn">Ver Ofertas</button>
+    </section>
+
+    <section class="categories">
+        <div class="container">
+            <h2 class="section-title">Categorias</h2>
+            <div class="category-container">
+                <div class="category">
+                    <img src="https://images.unsplash.com/photo-1550256076-db9c4d2c9d87?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Rações">
+                    <h3>Rações</h3>
+                </div>
+                <div class="category">
+                    <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Brinquedos">
+                    <h3>Brinquedos</h3>
+                </div>
+                <div class="category">
+                    <img src="https://images.unsplash.com/photo-1596363500725-22dd8d6e1f8e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Higiene">
+                    <h3>Higiene</h3>
+                </div>
+                <div class="category">
+                    <img src="https://images.unsplash.com/photo-1596492784531-6e6eb5ea9993?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Acessórios">
+                    <h3>Acessórios</h3>
+                </div>
             </div>
-            <div class="produto-card">
-                <img src="https://via.placeholder.com/300x200.png?text=Arranhador+para+Gato" alt="Arranhador para Gato">
-                <h4>Arranhador para Gato</h4>
-                <p>R$ 75,00</p>
-                <button>Adicionar ao Carrinho</button>
+        </div>
+    </section>
+
+    <section class="products">
+        <div class="container">
+            <h2 class="section-title">Produtos em Destaque</h2>
+            <div class="product-grid">
+                <div class="product">
+                    <div class="product-badge">Oferta</div>
+                    <img src="https://images.unsplash.com/photo-1593134257782-e89567b7718a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Ração Premium para Cães">
+                    <div class="product-info">
+                        <h3 class="product-title">Ração Premium para Cães Adultos</h3>
+                        <p class="product-price"><span class="old-price">R$ 169,90</span> R$ 149,90</p>
+                        <button class="product-btn">Adicionar ao Carrinho</button>
+                    </div>
+                </div>
+                
+                <div class="product">
+                    <img src="https://images.unsplash.com/photo-1573148164257-8a2b173be464?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Ração Premium para Gatos">
+                    <div class="product-info">
+                        <h3 class="product-title">Ração Premium para Gatos Castrados</h3>
+                        <p class="product-price">R$ 129,90</p>
+                        <button class="product-btn">Adicionar ao Carrinho</button>
+                    </div>
+                </div>
+                
+                <div class="product">
+                    <div class="product-badge">Novo</div>
+                    <img src="https://images.unsplash.com/photo-1591946653350-84b01d6e9d5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Brinquedo Interativo">
+                    <div class="product-info">
+                        <h3 class="product-title">Brinquedo Interativo para Pets</h3>
+                        <p class="product-price">R$ 39,90</p>
+                        <button class="product-btn">Adicionar ao Carrinho</button>
+                    </div>
+                </div>
+                
+                <div class="product">
+                    <img src="https://images.unsplash.com/photo-1596262317918-2e68eab2b568?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Cama Confortável">
+                    <div class="product-info">
+                        <h3 class="product-title">Cama Confortável para Cães</h3>
+                        <p class="product-price">R$ 89,90</p>
+                        <button class="product-btn">Adicionar ao Carrinho</button>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <div class="product-badge">-15%</div>
+                    <img src="https://images.unsplash.com/photo-1599643478517-a5d5d5e5b0f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Arranhador para Gatos">
+                    <div class="product-info">
+                        <h3 class="product-title">Arranhador para Gatos com Brinquedos</h3>
+                        <p class="product-price"><span class="old-price">R$ 199,90</span> R$ 169,90</p>
+                        <button class="product-btn">Adicionar ao Carrinho</button>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <img src="https://images.unsplash.com/photo-1597557317125-2f403e5b84d0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Coleira para Cães">
+                    <div class="product-info">
+                        <h3 class="product-title">Coleira para Cães com Guia</h3>
+                        <p class="product-price">R$ 49,90</p>
+                        <button class="product-btn">Adicionar ao Carrinho</button>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <div class="product-badge">Mais Vendido</div>
+                    <img src="https://images.unsplash.com/photo-1597557317125-2f40e5b84d0e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Areia Sanitária">
+                    <div class="product-info">
+                        <h3 class="product-title">Areia Sanitária para Gatos</h3>
+                        <p class="product-price">R$ 29,90</p>
+                        <button class="product-btn">Adicionar ao Carrinho</button>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <img src="https://images.unsplash.com/photo-1596262317918-2e68eab2b568?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Osso para Cães">
+                    <div class="product-info">
+                        <h3 class="product-title">Osso de Nylon para Cães</h3>
+                        <p class="product-price">R$ 24,90</p>
+                        <button class="product-btn">Adicionar ao Carrinho</button>
+                    </div>
+                </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
+
+    <section class="newsletter">
+        <div class="container">
+            <h2>Assine nossa Newsletter</h2>
+            <p>Receba novidades e promoções exclusivas para seu pet!</p>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Seu melhor e-mail">
+                <button type="submit" class="newsletter-btn">Assinar</button>
+            </form>
+        </div>
+    </section>
 
     <footer>
-        <p>&copy; 2025 PetShop Amigo. Todos os direitos reservados.</p>
-    </footer>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - PetShop Amigo</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <nav>
-            <h1>PetShop Amigo</h1>
-        </nav>
-    </header>
-
-    <main>
-        <h2>Área de Login</h2>
-        <form id="login-form">
-            <label for="email">E-mail:</label>
-            <input type="email" id="email" name="email" required>
-
-            <label for="senha">Senha:</label>
-            <input type="password" id="senha" name="senha" required>
-
-            <button type="submit">Entrar</button>
-        </form>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 PetShop Amigo. Todos os direitos reservados.</p>
-    </footer>
-</body>
-</html>
-// Exemplo de lista de produtos (simulação)
-const produtos = [
-    { id: 1, nome: "Brinquedo para Cão", preco: 25.00 },
-    { id: 2, nome: "Arranhador para Gato", preco: 75.00 }
-];
-
-// Carrinho de compras (armazenado no navegador)
-let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
-
-// Função para adicionar produto ao carrinho
-function adicionarAoCarrinho(produtoId) {
-    const produto = produtos.find(p => p.id === produtoId);
-    if (produto) {
-        carrinho.push(produto);
-        localStorage.setItem('carrinho', JSON.stringify(carrinho));
-        alert(`${produto.nome} adicionado ao carrinho!`);
-    }
-}
-
-// Event listener para os botões "Adicionar ao Carrinho"
-document.addEventListener('DOMContentLoaded', () => {
-    const botoesAdicionar = document.querySelectorAll('.produto-card button');
-    botoesAdicionar.forEach(botao => {
-        botao.addEventListener('click', (evento) => {
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>PetShop Online</h3>
+                    <p>Tudo que seu pet precisa com praticidade e os melhores preços!</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Links Rápidos</h3>
+                    <ul>
+                        <li><a href="#">Sobre nós</a></li>
+                        <li><a href="#">Perguntas frequentes</a></li>
+                        <li><a href="#">Política de entrega</a></li>
+                        <li><a href="#">Trocas e devoluções</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Categorias</h3>
+                    <ul>
+                        <li><a href="#">Cães</a></li>
+                        <li><a href="#">Gatos</a></li>
+                        <li><a href="#">Brinquedos</a></li>
+                        <li><a href="#">Promoções</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contato</h3>
+                    <p><i class="fas fa-phone"></i> (11) 9999-9999</p>
+                    <p><i class="fas fa-envelope"></i> contato@petshoponline.com.br</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Av. Paulista, 1000 - São Paulo/SP</p>
+                </div>
+            </div>
             
-            adicionarAoCarrinho(1); // Exemplo: Adiciona o produto de ID 1
+            <div class="footer-bottom">
+                <p>&copy; 2023 PetShop Online - Todos os direitos reservados</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.product-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                let currentCount = parseInt(document.querySelector('.cart-btn').textContent.match(/\d+/)[0]);
+                document.querySelector('.cart-btn').textContent = `🛒 Carrinho (${currentCount + 1})`;
+                
+                const product = this.closest('.product');
+                product.style.boxShadow = '0 0 0 3px #4e9caf';
+                setTimeout(() => {
+                    product.style.boxShadow = '';
+                }, 500);
+                
+                alert('Produto adicionado ao carrinho!');
+            });
         });
-    });
-});
+        
+        document.querySelector('.search-btn').addEventListener('click', function() {
+            const searchTerm = document.querySelector('.search-box').value;
+            if (searchTerm.trim() !== '') {
+                alert(`Buscando por: ${searchTerm}`);
+            }
+        });
+        
+        document.querySelector('.newsletter-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            const email = document.querySelector('.newsletter-input').value;
+            if (email.trim() !== '' && email.includes('@')) {
+                alert(`Obrigado por assinar nossa newsletter com o email: ${email}`);
+                document.querySelector('.newsletter-input').value = '';
+            } else {
+                alert('Por favor, insira um email válido.');
+            }
+        });
+
+        document.querySelector('.btn').addEventListener('click', function() {
+            document.querySelector('.products').scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
