@@ -194,7 +194,7 @@ section {
 
 /* Home Section */
 .home-container {
-    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('./img/background.jpg');
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(https://images.unsplash.com/photo-1450778869180-41d0601e046e?ixlib=rb-4.0.3&w=1200);
     background-size: cover;
     background-position: center;
     color: white;
