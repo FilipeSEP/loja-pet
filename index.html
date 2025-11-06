@@ -107,6 +107,7 @@
                         Adicionar ao Carrinho
                     </button>
                 </article>
+
                 <article class="box" data-product-id="2">
                     <img width="250" src="https://filipesep.github.io/loja-pet/img/caofilhote.png"
                         alt="Ração para Cães Filhotes - 10kg">
@@ -117,6 +118,7 @@
                         Adicionar ao Carrinho
                     </button>
                 </article>
+
                 <article class="box" data-product-id="3">
                     <img width="250" src="https://filipesep.github.io/loja-pet/img/gatoadulto.png"
                         alt="Ração para Gatos Adultos - 10kg">
@@ -127,34 +129,38 @@
                         Adicionar ao Carrinho
                     </button>
                 </article>
-                <article class="box" data-product-id="2">
+
+                <article class="box" data-product-id="4">
                     <img width="250" src="https://filipesep.github.io/loja-pet/img/gatof.png"
                         alt="Ração para Gatos Filhotes - 10kg">
-                    <h3>Ração para Cães Filhotes - 10kg</h3>
-                    <div class="price">R$ 109,99</div>
-                    <button class="btn add-to-cart" data-product-id="2" data-product="Ração para Gatos Filhotes"
-                        data-price="109.99">
+                    <h3>Ração para Gatos Filhotes - 10kg</h3>
+                    <div class="price">R$ 119,99</div>
+                    <button class="btn add-to-cart" data-product-id="4" data-product="Ração para Gatos Filhotes"
+                        data-price="119.99">
                         Adicionar ao Carrinho
-                        <button>
-                            <article class="box" data-product-id="4">
-                                <img width="250" src="https://filipesep.github.io/loja-pet/img/EGG.jpg"
-                                    alt="cama cinza" />
-                                <h3>Cama cinza - TAM EGG</h3>
-                                <div class="price">R$ 329,99</div>
-                                <button class="btn add-to-cart" data-product-id="4"
-                                    data-product="Cama grande, cor cinza" data-price="329.99">
-                                    Adicionar ao Carrinho
-                                </button>
-                                <article class="box" data-product-id="4">
-                                    <img width="250" src="https://filipesep.github.io/loja-pet/img/camanuvem.jpg"
-                                        alt="Cama retangular rosa" />
-                                    <h3>Cama Nuvem Brigadeiro - TAM M</h3>
-                                    <div class="price">R$ 129,99</div>
-                                    <button class="btn add-to-cart" data-product-id="4" data-product="Cama M, cor rosa"
-                                        data-price="129.99">
-                                        Adicionar ao Carrinho
-                                    </button>
-                                </article>
+                    </button>
+                </article>
+
+                <article class="box" data-product-id="5">
+                    <img width="250" src="https://filipesep.github.io/loja-pet/img/EGG.jpg" alt="Cama cinza">
+                    <h3>Cama cinza - TAM EGG</h3>
+                    <div class="price">R$ 329,99</div>
+                    <button class="btn add-to-cart" data-product-id="5" data-product="Cama grande, cor cinza"
+                        data-price="329.99">
+                        Adicionar ao Carrinho
+                    </button>
+                </article>
+
+                <article class="box" data-product-id="6">
+                    <img width="250" src="https://filipesep.github.io/loja-pet/img/camanuvem.jpg"
+                        alt="Cama retangular rosa">
+                    <h3>Cama Nuvem Brigadeiro - TAM M</h3>
+                    <div class="price">R$ 129,99</div>
+                    <button class="btn add-to-cart" data-product-id="6" data-product="Cama M, cor rosa"
+                        data-price="129.99">
+                        Adicionar ao Carrinho
+                    </button>
+                </article>
             </div>
         </section>
 
@@ -249,6 +255,7 @@
         </div>
     </footer>
 
+    <!-- Modal de Checkout -->
     <div id="checkout-modal" class="modal">
         <div class="modal-content checkout-content">
             <span class="close">&times;</span>
@@ -261,6 +268,7 @@
                 <div class="step" data-step="4">Confirmação</div>
             </div>
 
+            <!-- Passo 1: Endereço -->
             <div class="checkout-step" id="step-1">
                 <h3>Informe seu endereço</h3>
                 <form id="address-form">
@@ -329,9 +337,11 @@
                 </form>
             </div>
 
+            <!-- Passo 2: Frete -->
             <div class="checkout-step" id="step-2" style="display: none;">
                 <h3>Escolha a forma de entrega</h3>
                 <div id="shipping-options">
+                    <!-- Opções de frete serão geradas aqui -->
                 </div>
                 <div class="checkout-actions">
                     <button class="btn-secondary" onclick="prevStep(1)">Voltar</button>
@@ -339,6 +349,7 @@
                 </div>
             </div>
 
+            <!-- Passo 3: Pagamento -->
             <div class="checkout-step" id="step-3" style="display: none;">
                 <h3>Método de Pagamento</h3>
                 <div class="payment-methods">
@@ -359,7 +370,7 @@
                         <span>Boleto Bancário</span>
                     </label>
                 </div>
-
+                
                 <div class="order-summary">
                     <h4>Resumo do Pedido</h4>
                     <div class="summary-item">
@@ -375,12 +386,14 @@
                         <span id="summary-total">R$ 0,00</span>
                     </div>
                 </div>
-
+                
                 <div class="checkout-actions">
                     <button class="btn-secondary" onclick="prevStep(2)">Voltar</button>
                     <button class="btn-primary" onclick="finalizeOrder()">Finalizar Pedido</button>
                 </div>
             </div>
+
+            <!-- Passo 4: Confirmação -->
             <div class="checkout-step" id="step-4" style="display: none;">
                 <div class="confirmation">
                     <div class="success-icon">✓</div>
@@ -398,26 +411,6 @@
     </div>
 
     <script src="loja.js"></script>
-
-    <script>
-        // Verificador de imagens para GitHub Pages
-        document.addEventListener('DOMContentLoaded', function () {
-            console.log('🔍 Verificando imagens...');
-
-            const images = document.querySelectorAll('img');
-            images.forEach((img, index) => {
-                const imgTest = new Image();
-                imgTest.onload = function () {
-                    console.log(`✅ ${img.src} - CARREGADA`);
-                };
-                imgTest.onerror = function () {
-                    console.error(`❌ ${img.src} - NÃO ENCONTRADA`);
-                    img.style.border = '3px solid red';
-                };
-                imgTest.src = img.src;
-            });
-        });
-    </script>
 
 </body>
 
