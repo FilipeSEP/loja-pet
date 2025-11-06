@@ -1,4 +1,4 @@
-// Sistema de Carrinho e Usuário
+
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
 let selectedShipping = null;
@@ -8,12 +8,10 @@ let checkoutData = {
     payment: null
 };
 
-// Elementos do DOM
 const cartIcon = document.getElementById('cart-icon');
 const cartCounter = document.getElementById('cart-counter');
 let cartModal, loginModal;
 
-// Inicialização
 document.addEventListener('DOMContentLoaded', function() {
     if (!cartIcon || !cartCounter) {
         console.error('Elementos essenciais do carrinho não encontrados');
@@ -24,13 +22,12 @@ document.addEventListener('DOMContentLoaded', function() {
     updateCartCounter();
     updateUserInterface();
     setupEventListeners();
-    setupCheckoutButton(); // Configuração específica para mobile
-    mobileDebug(); // Debug para mobile
+    setupCheckoutButton(); 
+    mobileDebug(); 
 });
 
-// Configurar modais
 function initializeModals() {
-    // Modal do Carrinho
+
     cartModal = document.createElement('div');
     cartModal.className = 'cart-modal';
     cartModal.innerHTML = `
@@ -48,9 +45,8 @@ function initializeModals() {
             <button class="btn-primary" id="checkout-btn" style="width: 100%;" onclick="handleFinalizarCompra(event)">Finalizar Compra</button>
         </div>
     `;
-    document.body.appendChild(cartModal);
 
-    // Modal de Login
+    document.body.appendChild(cartModal);
     loginModal = document.createElement('div');
     loginModal.className = 'modal';
     loginModal.innerHTML = `
@@ -76,9 +72,7 @@ function initializeModals() {
     document.body.appendChild(loginModal);
 }
 
-// Configurar event listeners
 function setupEventListeners() {
-    // Carrinho
     if (cartIcon) {
         cartIcon.addEventListener('click', toggleCart);
         cartIcon.addEventListener('touchend', function(e) {
@@ -96,7 +90,6 @@ function setupEventListeners() {
         });
     }
 
-    // User Menu
     const userIcon = document.getElementById('user-icon');
     if (userIcon) {
         userIcon.addEventListener('click', toggleUserDropdown);
@@ -106,7 +99,6 @@ function setupEventListeners() {
         });
     }
 
-    // Login
     const loginBtn = document.getElementById('login-btn');
     if (loginBtn) {
         loginBtn.addEventListener('click', showLoginModal);
@@ -148,7 +140,6 @@ function setupEventListeners() {
         });
     }
 
-    // Adicionar ao carrinho
     const addToCartButtons = document.querySelectorAll('.add-to-cart');
     if (addToCartButtons.length > 0) {
         addToCartButtons.forEach(button => {
@@ -169,7 +160,6 @@ function setupEventListeners() {
         });
     }
 
-    // Checkout modal close
     const checkoutClose = document.querySelector('#checkout-modal .close');
     if (checkoutClose) {
         checkoutClose.addEventListener('click', closeCheckout);
@@ -179,10 +169,8 @@ function setupEventListeners() {
         });
     }
 
-    // Auto-complete de CEP
     setupCEPAutoComplete();
 
-    // Fechar modais ao clicar fora
     window.addEventListener('click', function(event) {
         if (cartModal && event.target === cartModal) {
             toggleCart();
@@ -204,19 +192,15 @@ function setupEventListeners() {
     });
 }
 
-// CORREÇÃO ESPECÍFICA PARA MOBILE - Botão Finalizar Compra
 function setupCheckoutButton() {
     const checkoutBtn = document.getElementById('checkout-btn');
     if (checkoutBtn) {
         console.log('Configurando botão Finalizar Compra para mobile...');
         
-        // Remove event listeners antigos
         checkoutBtn.replaceWith(checkoutBtn.cloneNode(true));
         
-        // Pega o novo botão
         const newCheckoutBtn = document.getElementById('checkout-btn');
         
-        // Adiciona event listeners para todos os tipos de interação
         newCheckoutBtn.addEventListener('click', handleFinalizarCompra);
         newCheckoutBtn.addEventListener('touchend', handleFinalizarCompra);
         
@@ -246,21 +230,17 @@ function finalizarCompra() {
     if (!currentUser) {
         alert('Por favor, faça login para finalizar a compra!');
         showLoginModal();
-        toggleCart(); // Fecha o carrinho
+        toggleCart(); 
         return;
     }
     
-    // Fecha o carrinho e abre o checkout
     toggleCart();
     
-    // Pequeno delay para garantir que o carrinho fechou
     setTimeout(() => {
         showCheckoutModal();
         console.log('✅ Checkout modal aberto com sucesso!');
     }, 300);
 }
-
-// Sistema de Carrinho
 function addToCart(productId, productName, productPrice) {
     const existingItem = cart.find(item => item.id === productId);
     
@@ -345,7 +325,6 @@ function updateCartModal() {
     
     cartTotal.textContent = total.toFixed(2);
     
-    // Reconfigura o botão após atualizar o modal
     setTimeout(setupCheckoutButton, 100);
 }
 
@@ -364,7 +343,6 @@ function saveCart() {
     localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-// Sistema de Login/Usuário
 function showLoginModal() {
     if (loginModal) {
         loginModal.style.display = 'block';
@@ -464,7 +442,6 @@ function updateUserInterface() {
     if (myAddressesBtn) myAddressesBtn.style.display = currentUser ? 'block' : 'none';
 }
 
-// Sistema de Checkout
 function showCheckoutModal() {
     const checkoutModal = document.getElementById('checkout-modal');
     if (checkoutModal) {
@@ -678,7 +655,6 @@ function setupCEPAutoComplete() {
     }
 }
 
-// Utilitários
 function showNotification(message) {
     const notification = document.createElement('div');
     notification.style.cssText = `
@@ -703,7 +679,6 @@ function showNotification(message) {
     }, 3000);
 }
 
-// Debug para mobile
 function mobileDebug() {
     console.log('🛠️ Debug mobile ativado');
     
@@ -723,7 +698,6 @@ function mobileDebug() {
     }
 }
 
-// Adicionar animação CSS para notificação
 const style = document.createElement('style');
 style.textContent = `
     @keyframes slideIn {
